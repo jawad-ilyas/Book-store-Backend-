@@ -17,7 +17,7 @@ const getAllBooks = async (req, res) => {
 
 
     try {
-        const allBooks = await Book.find({})
+        const allBooks = await Book.find({}).sort({ createdAt: -1 })
 
         res.status(200).json({ message: "list of all bookds ", books: allBooks })
     } catch (error) {
@@ -28,4 +28,64 @@ const getAllBooks = async (req, res) => {
 
 }
 
-export { createBook, getAllBooks }
+
+const getSingleBook = async (req, res) => {
+
+    try {
+        const { id } = req.params;
+
+        if (!id) {
+            res.status(404).json({ message: "book is not found " })
+
+        }
+
+        const book = await Book.findById(id)
+
+        if (!book) {
+            res.status(404).json({ message: "book is not found " })
+
+        }
+        res.status(200).json({ message: "get  bookds ", book })
+
+    } catch (error) {
+        console.log("error into get single bookd ", error);
+        res.status(404).json({ message: "failed to fetch teh single book " })
+
+    }
+}
+
+
+
+const updateBook = async (req, res) => {
+
+    try {
+        const { id } = req.params;
+        const updateBook = await Book.findByIdAndUpdate(id, req?.body, { new: true })
+        if (!updateBook) {
+            res.status(404).json({ message: "book is not found " })
+
+        }
+        res.status(200).json({ message: "book are updated ", book: updateBook })
+
+    } catch (error) {
+        console.log("error into get single bookd ", error);
+        res.status(404).json({ message: "failed to update the book " })
+
+    }
+}
+
+const deleteBook = async (req,res) => {
+    try {
+        const { id } = req.params;
+        const deleteBook = await Book.findByIdAndDelete(id, { new: true })
+        if (!deleteBook) {
+            res.status(404).json({ message: "book is not found " })
+
+        }
+        res.status(200).json({ message: "book are deleted ",  })
+    } catch (error) {
+        console.log("error into get single bookd ", error);
+        res.status(404).json({ message: "failed to delete the book " })
+    }
+}
+export { createBook, getAllBooks, getSingleBook, updateBook ,deleteBook}

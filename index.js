@@ -1,7 +1,7 @@
 import express from "express"
 import dotenv from "dotenv"
 import { connectDb } from "./db/index.db.js";
-
+import cors from "cors"
 
 
 
@@ -10,7 +10,10 @@ const app = express();
 
 
 dotenv.config()
-
+app.use(cors({
+    origin: "http://localhost:5173",
+    credentials: true
+}))
 
 
 
@@ -27,8 +30,10 @@ app.use(express.json());
 
 
 import BookRouter from "./src/books/book.route.js"
+import OrderRouter from "./src/orders/orders.routes.js"
 
-app.use("/api/v1/book" , BookRouter)
+app.use("/api/v1/book", BookRouter)
+app.use("/api/v1/order", OrderRouter)
 
 
 
