@@ -1,6 +1,8 @@
 import { Order } from "../orders/orders.model.js";
 
 const createOrder = async (req, res) => {
+
+    console.log("create order is called")
     try {
         const {
             name,
@@ -54,6 +56,27 @@ const createOrder = async (req, res) => {
         });
     }
 };
+const getOrdersForUser = async (req, res) => {
+  try {
+    const { email } = req.params;
+
+    // Fetch all orders for this email
+    const orders = await Order.find({ email });
+
+    return res.status(200).json({
+      message: "Orders fetched successfully",
+      success: true,
+      orders,
+    });
+  } catch (error) {
+    console.error("Error in getOrdersForUser:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong while fetching orders",
+      error: error.message,
+    });
+  }
+};
 
 
-export { createOrder }
+export { createOrder, getOrdersForUser }

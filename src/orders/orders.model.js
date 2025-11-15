@@ -24,7 +24,7 @@ const orderSchema = new mongoose.Schema(
         paymentMethod: {
             type: String,
             required: true,
-            enum: ["COD", "Stripe", "Paypal", "Bank"], // customize as needed
+            // enum: ["cod", "stripe", "paypal", "Bank"], // customize as needed
         },
 
         phone: {

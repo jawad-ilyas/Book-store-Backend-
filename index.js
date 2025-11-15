@@ -1,6 +1,5 @@
 import express from "express"
 import dotenv from "dotenv"
-import { connectDb } from "./db/index.db.js";
 import cors from "cors"
 
 
@@ -28,12 +27,17 @@ app.use(express.json());
 //     res.send("Server is running!");
 // });
 
+import { connectDb } from "./src/db/index.db.js";
 
 import BookRouter from "./src/books/book.route.js"
 import OrderRouter from "./src/orders/orders.routes.js"
+import userRouter from "./src/users/user.routes.js"
+import adminRouter from "./src/stats/admin.stats.js"
 
 app.use("/api/v1/book", BookRouter)
-app.use("/api/v1/order", OrderRouter)
+app.use("/api/v1/orders", OrderRouter)
+app.use("/api/v1/auth/admin", userRouter)
+app.use("/api/v1/admin", adminRouter)
 
 
 
@@ -52,8 +56,5 @@ connectDb()
 
 
 
-app.use('/', () => {
-    console.log("you create the server ");
 
-})
 
