@@ -10,7 +10,7 @@ const app = express();
 
 dotenv.config()
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173", 'https://book-store-frontend-pi-blush.vercel.app'],
     credentials: true
 }))
 
